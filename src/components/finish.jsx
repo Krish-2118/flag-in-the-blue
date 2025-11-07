@@ -1,20 +1,20 @@
-import React, { useState } from "react"; 
+import React, { useState,useEffect } from "react"; 
 import hints from "../data/hint.js"; 
 import hintButtonImg from "../assets/hintbutton.png";
 import popupBoxImg from "../assets/popupbox.png"; 
-import nextHintImg from "../assets/nexthint.png"; 
+//import nextHintImg from "../assets/nexthint.png"; 
 import prevBoxImg from "../assets/prevbox.png";
 import okBoxImg from "../assets/okbox.png";
 import nextBoxImg from "../assets/nextbox.png"; 
 import finish from "../assets/finish.png";
-import tryagain from "../assets/tryagain.png";
+//import tryagain from "../assets/tryagain.png";
 
 const jakartaFont = { fontFamily: '"Super Squad", sans-serif' };
 
-export default function HintBox() {
+export default function HintBox({isCorrectSelected}) {
   const [index, setIndex] = useState(0); 
   const [isOpen, setIsOpen] = useState(false); 
-  const [isCorrectOpen, setIsCorrectOpen] = useState(true); 
+  const [isCorrectOpen, setIsCorrectOpen] = useState(false); 
 
   const totalHints = hints?.length || 0;
   
@@ -30,6 +30,8 @@ export default function HintBox() {
     });
     if (isCorrectOpen) setIsCorrectOpen(false); 
   };
+
+  useEffect(()=>{setIsCorrectOpen(isCorrectSelected)},[isCorrectSelected]);
 
   const handleNextHintFromCorrect = () => {
     setIsCorrectOpen(false);

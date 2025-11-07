@@ -1,17 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackgroundImage from "../assets/background.png";
 import { scene } from "../config/scene";
 
-export default function OceanScene() {
+export default function OceanScene({isCorrectSelected,setIsCorrectSelect}) {
   const [activeId, setActiveId] = useState(null);
-
+  const [correctActiveId, setCorrectActiveId] = useState(null);
   const handleClick = (e, id) => {
     e.stopPropagation();
-    // toggle active state
-    setActiveId((cur) => (cur === id ? null : id));
+    setActiveId(id);
+
+    // Use `id` directly instead of the stale state value
+    if (correctActiveId === id) {
+      setIsCorrectSelect(true);
+      console.log("Correct");
+    } else {
+      setIsCorrectSelect(false);
+    }
   };
 
   const closeActive = () => setActiveId(null);
+
+  useEffect(() => {
+  const octopusItem = scene.find((item) => item.name === "Octopus");
+  if (octopusItem) {
+      const id = `object-${scene.indexOf(octopusItem)}`;
+      setCorrectActiveId(id);
+    }
+  }, [scene]);
 
   return (
     <div

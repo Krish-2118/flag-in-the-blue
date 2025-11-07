@@ -35,6 +35,11 @@ export const scene = [
     top: "58.5vh",
     left: "94.5vw",
     src: Crab,
+    clues: {"Crab": [
+        "I represent Rust’s mascot — Ferris, the fearless one.",
+        "I walk sideways on the shore with sharp claws.",
+        "I’m a red-shelled crustacean — who am I?"
+    ]}
   },
   {
     name: "Coins",
@@ -145,6 +150,12 @@ export const scene = [
     top: "49vh",
     left: "84.5vw",
     src: Octopus,
+    clues: 
+    {"Octopus": [
+        "I’m like an async process — handling multiple threads at once.",
+        "I live deep in the ocean and can camouflage my body.",
+        "I have eight flexible arms — who am I?"
+    ]},
   },
   {
     name: "Diver",
