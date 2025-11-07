@@ -1,17 +1,37 @@
 import { useState } from "react";
 import BackgroundImage from "../assets/background.png";
 import { scene } from "../config/scene";
+import Start from "../assets/startbutton.png";
+import HintBox from "@/components/hints";
+import Timer from "@/components/GameTimer.jsx";
 
 export default function OceanScene() {
   const [activeId, setActiveId] = useState(null);
+  const [showStartButton, setShowStartButton] = useState(true);
+  const [showFinalPopup, setShowFinalPopup] = useState(false);
+  const [showTimer , setShowTimer] = useState(false);
 
   const handleClick = (e, id) => {
     e.stopPropagation();
-    // toggle active state
     setActiveId((cur) => (cur === id ? null : id));
   };
 
   const closeActive = () => setActiveId(null);
+
+  // when start button is clicked: open popup and hide the button
+  const handleStartClick = (e) => {
+    e.stopPropagation();
+    setShowFinalPopup(true);
+    setShowTimer(true);
+    setShowStartButton(false);
+  };
+
+  // when popup closes, decide whether to show the start button again
+  const handlePopupClose = () => {
+    setShowFinalPopup(false);
+    setShowTimer(false);
+    setShowStartButton(true);
+  };
 
   return (
     <div
@@ -57,6 +77,31 @@ export default function OceanScene() {
           aria-hidden="true"
         />
       )}
+
+      {showStartButton && (
+        <img
+          src={Start}
+          alt="Start"
+          role="button"
+          onClick={handleStartClick}
+          className="absolute"
+          style={{
+            bottom: "10vh",
+            left: "45%",
+            width: 170,
+            height: "auto",
+            zIndex: 3000,
+            cursor: "pointer",
+          }}
+          onKeyDown={(e) => { if (e.key === "Enter") handleStartClick(e); }}
+          tabIndex={0}
+        />
+      )}
+
+      {showFinalPopup && [
+        <HintBox onClose={handlePopupClose}/>,
+        <Timer onClose={handlePopupClose}/>
+      ]}
     </div>
   );
 }

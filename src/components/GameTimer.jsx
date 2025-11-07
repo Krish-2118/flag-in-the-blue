@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import popupBoxImg from "/popupbox.png";
+import popupBoxImg from "../assets/popupbox.png";
 
 const jakartaFont = { fontFamily: '"Super Squad", sans-serif' };
 
 export default function GameTimer() {
-  const [time, setTime] = useState(135000);
+  const [time, setTime] = useState(61000);
   const [bonusTime] = useState(0.1);
-  const [objectsFound] = useState(3);
+  const [objectsFound] = useState(0);
   const totalObjects = 10;
 
   useEffect(() => {
