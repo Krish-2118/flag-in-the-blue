@@ -12,6 +12,8 @@ function App() {
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
+                    {/* TODO: Change the order to register(by default) then automatically login
+                    (if registered now then no need for login). */}
                     <Route
                         path="/"
                         element={<Navigate to="/login" replace />}

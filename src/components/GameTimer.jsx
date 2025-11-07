@@ -4,7 +4,7 @@ import popupBoxImg from "/popupbox.png";
 const jakartaFont = { fontFamily: '"Super Squad", sans-serif' };
 
 export default function GameTimer() {
-  const [time, setTime] = useState(135000);
+  const [time, setTime] = useState(60000);
   const [bonusTime] = useState(0.1);
   const [objectsFound] = useState(3);
   const totalObjects = 10;
