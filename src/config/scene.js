@@ -32,9 +32,14 @@ export const scene = [
     name: "Crab",
     width: "4.5vw",
     height: "8.5vh",
-    top: "64vh",
-    left: "87vw",
+    top: "58.5vh",
+    left: "94.5vw",
     src: Crab,
+    clues: {"Crab": [
+        "I represent Rust’s mascot — Ferris, the fearless one.",
+        "I walk sideways on the shore with sharp claws.",
+        "I’m a red-shelled crustacean — who am I?"
+    ]}
   },
   {
     name: "Coins",
@@ -43,6 +48,7 @@ export const scene = [
     top: "86vh",
     left: "65vw",
     src: Coins,
+    zindex: 2,
   },
   {
     name: "RedGrass",
@@ -144,6 +150,12 @@ export const scene = [
     top: "49vh",
     left: "84.5vw",
     src: Octopus,
+    clues: 
+    {"Octopus": [
+        "I’m like an async process — handling multiple threads at once.",
+        "I live deep in the ocean and can camouflage my body.",
+        "I have eight flexible arms — who am I?"
+    ]},
   },
   {
     name: "Diver",
@@ -152,13 +164,14 @@ export const scene = [
     top: "21vh",
     left: "23vw",
     src: Diver,
+    zindex: 4,
   },
   {
     name: "Mermaid",
     width: "10vw",
     height: "30vh",
     top: "32vh",
-    left: "18vw",
+    left: "15vw",
     src: Mermaid,
   },
   {

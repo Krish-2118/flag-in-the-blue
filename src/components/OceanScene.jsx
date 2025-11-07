@@ -1,19 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackgroundImage from "../assets/background.png";
 import { scene } from "../config/scene";
 import Start from "../assets/startbutton.png";
 import HintBox from "@/components/hints";
 import Timer from "@/components/GameTimer.jsx";
 
-export default function OceanScene() {
+export default function OceanScene({ isCorrectSelected, setIsCorrectSelect }) {
   const [activeId, setActiveId] = useState(null);
   const [showStartButton, setShowStartButton] = useState(true);
   const [showFinalPopup, setShowFinalPopup] = useState(false);
-  const [showTimer , setShowTimer] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
 
   const handleClick = (e, id) => {
     e.stopPropagation();
     setActiveId((cur) => (cur === id ? null : id));
+    const [correctActiveId, setCorrectActiveId] = useState(null);
+    const handleClick = (e, id) => {
+      e.stopPropagation();
+      setActiveId(id);
+
+      // Use `id` directly instead of the stale state value
+      if (correctActiveId === id) {
+        setIsCorrectSelect(true);
+        console.log("Correct");
+      } else {
+        setIsCorrectSelect(false);
+      }
+    };
   };
 
   const closeActive = () => setActiveId(null);
@@ -53,7 +66,9 @@ export default function OceanScene() {
             data-object-id={id}
             src={item.src}
             alt={item.name}
-            className={`absolute object-hoverable transition-transform duration-200 ease-out ${isActive ? "object-active" : ""}`}
+            className={`absolute object-hoverable transition-transform duration-200 ease-out ${
+              isActive ? "object-active" : ""
+            }`}
             onClick={(e) => handleClick(e, id)}
             style={{
               top: item.top,
@@ -93,14 +108,16 @@ export default function OceanScene() {
             zIndex: 3000,
             cursor: "pointer",
           }}
-          onKeyDown={(e) => { if (e.key === "Enter") handleStartClick(e); }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleStartClick(e);
+          }}
           tabIndex={0}
         />
       )}
 
       {showFinalPopup && [
-        <HintBox onClose={handlePopupClose}/>,
-        <Timer onClose={handlePopupClose}/>
+        <HintBox onClose={handlePopupClose} />,
+        <Timer onClose={handlePopupClose} />,
       ]}
     </div>
   );
