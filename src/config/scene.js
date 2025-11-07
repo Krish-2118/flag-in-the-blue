@@ -139,8 +139,8 @@ export const scene = [
     name: "Turtle",
     width: "12vw",
     height: "19vh",
-    top: "38vh",
-    left: "50vw",
+    top: "33vh",
+    left: "53.7vw",
     src: turtle,
   },
   {

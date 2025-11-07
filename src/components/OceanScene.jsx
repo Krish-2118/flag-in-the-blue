@@ -1,32 +1,50 @@
 import { useEffect, useState } from "react";
 import BackgroundImage from "../assets/background.png";
 import { scene } from "../config/scene";
+import Start from "../assets/startbutton.png";
+import HintBox from "@/components/hints";
+import Timer from "@/components/GameTimer.jsx";
 
-export default function OceanScene({isCorrectSelected,setIsCorrectSelect}) {
+export default function OceanScene({ isCorrectSelected, setIsCorrectSelect }) {
   const [activeId, setActiveId] = useState(null);
-  const [correctActiveId, setCorrectActiveId] = useState(null);
+  const [showStartButton, setShowStartButton] = useState(true);
+  const [showFinalPopup, setShowFinalPopup] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
+
   const handleClick = (e, id) => {
     e.stopPropagation();
-    setActiveId(id);
+    setActiveId((cur) => (cur === id ? null : id));
+    const [correctActiveId, setCorrectActiveId] = useState(null);
+    const handleClick = (e, id) => {
+      e.stopPropagation();
+      setActiveId(id);
 
-    // Use `id` directly instead of the stale state value
-    if (correctActiveId === id) {
-      setIsCorrectSelect(true);
-      console.log("Correct");
-    } else {
-      setIsCorrectSelect(false);
-    }
+      // Use `id` directly instead of the stale state value
+      if (correctActiveId === id) {
+        setIsCorrectSelect(true);
+        console.log("Correct");
+      } else {
+        setIsCorrectSelect(false);
+      }
+    };
   };
 
   const closeActive = () => setActiveId(null);
 
-  useEffect(() => {
-  const octopusItem = scene.find((item) => item.name === "Octopus");
-  if (octopusItem) {
-      const id = `object-${scene.indexOf(octopusItem)}`;
-      setCorrectActiveId(id);
-    }
-  }, [scene]);
+  // when start button is clicked: open popup and hide the button
+  const handleStartClick = (e) => {
+    e.stopPropagation();
+    setShowFinalPopup(true);
+    setShowTimer(true);
+    setShowStartButton(false);
+  };
+
+  // when popup closes, decide whether to show the start button again
+  const handlePopupClose = () => {
+    setShowFinalPopup(false);
+    setShowTimer(false);
+    setShowStartButton(true);
+  };
 
   return (
     <div
@@ -48,7 +66,9 @@ export default function OceanScene({isCorrectSelected,setIsCorrectSelect}) {
             data-object-id={id}
             src={item.src}
             alt={item.name}
-            className={`absolute object-hoverable transition-transform duration-200 ease-out ${isActive ? "object-active" : ""}`}
+            className={`absolute object-hoverable transition-transform duration-200 ease-out ${
+              isActive ? "object-active" : ""
+            }`}
             onClick={(e) => handleClick(e, id)}
             style={{
               top: item.top,
@@ -72,6 +92,33 @@ export default function OceanScene({isCorrectSelected,setIsCorrectSelect}) {
           aria-hidden="true"
         />
       )}
+
+      {showStartButton && (
+        <img
+          src={Start}
+          alt="Start"
+          role="button"
+          onClick={handleStartClick}
+          className="absolute"
+          style={{
+            bottom: "10vh",
+            left: "45%",
+            width: 170,
+            height: "auto",
+            zIndex: 3000,
+            cursor: "pointer",
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleStartClick(e);
+          }}
+          tabIndex={0}
+        />
+      )}
+
+      {showFinalPopup && [
+        <HintBox onClose={handlePopupClose} />,
+        <Timer onClose={handlePopupClose} />,
+      ]}
     </div>
   );
 }
